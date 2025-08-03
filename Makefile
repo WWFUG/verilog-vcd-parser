@@ -52,4 +52,8 @@ $(TEST_APP) : $(TEST_FILE) $(SRC_DIR)/VCDStandalone.cpp $(VCD_OBJ_FILES)
 clean:
 	rm -rf $(LEX_OUT) $(LEX_HEADER) $(LEX_OBJ) \
            $(YAC_OUT) $(YAC_HEADER) $(YAC_OBJ) \
-           position.hh stack.hh location.hh VCDParser.output $(TEST_APP)
+           position.hh stack.hh location.hh VCDParser.output $(TEST_APP) \
+		   $(BUILD_DIR)/*.o $(BUILD_DIR)/*.a \
+		   $(BUILD_DIR)/*.hpp $(BUILD_DIR)/*.cpp $(BUILD_DIR)/*.hh \
+		   $(BUILD_DIR)/libverilog-vcd-parser.a \
+		   $(BUILD_DIR)/*.output \
