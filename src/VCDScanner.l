@@ -162,15 +162,15 @@ VERSION_TEXT        {COMMENT_TEXT}
     //std::cout << yytext << ", ";
     VCDTimeUnit tr = TIME_S;
 
-    if(std::strcmp(yytext, "s")) {
+    if(!std::strcmp(yytext, "s")) {
         tr = TIME_S;
-    } else if(std::strcmp(yytext, "ms")) {
+    } else if(!std::strcmp(yytext, "ms")) {
         tr = TIME_MS;
-    } else if(std::strcmp(yytext, "us")) {
+    } else if(!std::strcmp(yytext, "us")) {
         tr = TIME_US;
-    } else if(std::strcmp(yytext, "ns")) {
+    } else if(!std::strcmp(yytext, "ns")) {
         tr = TIME_NS;
-    } else if(std::strcmp(yytext, "ps")) {
+    } else if(!std::strcmp(yytext, "ps")) {
         tr = TIME_PS;
     }
 
@@ -394,9 +394,11 @@ void VCDFileParser::scan_begin() {
         error("Cannot open "+filepath+": "+strerror(errno));
         exit(EXIT_FAILURE);
     }
+    // Ensure Flex scanner state is reset for each parse
+    VCDParserrestart(yyin);
 }
 
 void VCDFileParser::scan_end() {
-    fclose(yyin);
-    yypop_buffer_state();
+    if (yyin && yyin != stdin) fclose(yyin);
+    if (YY_CURRENT_BUFFER) yypop_buffer_state();
 }
